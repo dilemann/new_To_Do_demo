@@ -1,0 +1,130 @@
+* {
+    padding: 0;
+    /* margin: 0; */
+    border: 0;
+}
+
+body {
+
+
+    background-color: bisque;
+    font-family: 'Lucida Sans Unicode', sans-serif;
+    margin-top: 30px;
+
+}
+
+
+.btn {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 80px;
+    color: white;
+    transition: background-color 1s;
+    cursor: pointer;
+}
+
+.box {
+
+    margin: 0 auto;
+    max-width: 1200px;
+    border: 1px solid rgb(173, 173, 173);
+    display: flex;
+    align-items: center;
+}
+
+.container__btn {
+
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.note__done__btn {
+    background-color: green;
+
+}
+
+.note__done__btn:hover {
+
+    background-color: rgb(7, 99, 49);
+}
+
+.note__edit__btn {
+    background-color: rgb(244, 164, 17);
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+}
+
+.note__edit__btn:hover {
+    background-color: rgb(183, 125, 18);
+
+}
+
+.note__save__btn {
+
+    background-color: gray;
+}
+
+.note__save__btn:hover {
+    background-color: rgb(57, 57, 57);
+
+}
+
+
+.note__remove__btn {
+
+    background-color: red;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+
+.note__remove__btn:hover {
+    background-color: rgb(180, 44, 29);
+
+}
+
+
+.note__write {
+
+    max-width: 75%;
+    word-wrap: break-word;
+
+}
+
+.note {
+
+    height: 40px;
+    margin-bottom: 5px;
+    justify-content: space-between;
+    padding: 10px;
+
+}
+
+.note_active {
+
+    background-color: rgb(141, 212, 139);
+}
+
+.inputStyle {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-color: inherit;
+    outline: none;
+}
+
+.note_border {
+
+    box-shadow: 0 0 10px 3px rgb(125, 214, 125);
+
+}
