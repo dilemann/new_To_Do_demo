@@ -29,7 +29,7 @@ class Note {
     this.deleteButton.textContent = 'Löschen';
 
     // add to parent
-    this.parent.append(this.item);
+    this.parent.container.append(this.item);
     this.item.append(this.input);
     this.item.append(this.writeField);
     this.item.append(this.buttonContainer);
@@ -37,7 +37,7 @@ class Note {
     this.buttonContainer.append(this.saveButton);
     this.buttonContainer.append(this.doneButton);
     this.buttonContainer.append(this.deleteButton);
-    // this.noteInit();
+    this._dataSave();
     this.doneButton.addEventListener('click', () => (this.done = !this.done));
 
     this.editButton.addEventListener('click', () => {
@@ -45,13 +45,11 @@ class Note {
       console.log();
     });
     this.saveButton.addEventListener('click', () => this._dataSave());
-    // this.input.value = this.name;
+    this.input.value = this.name;
   }
 
   set done(item) {
     this._done = item;
-    if (this._done) this.item.classList.add('note_active');
-    else this.item.classList.remove('note_active');
     this._dataSave();
   }
 
@@ -65,6 +63,8 @@ class Note {
   }
 
   _dataSave() {
+    if (this.done) this.item.classList.add('note_active');
+    else this.item.classList.remove('note_active');
     this.input.disabled = true;
     this._note = [
       {
@@ -75,18 +75,6 @@ class Note {
     ];
     localStorage.setItem('name', JSON.stringify(this._note));
   }
-
-  // noteInit() {
-  //   if (localStorage.getItem('name')) {
-  //     console.log(1);
-  //     const gg = [];
-  //     gg.push(JSON.parse(localStorage.getItem('name')));
-  //     const [item] = gg[0];
-  //     console.log(item);
-
-  //     new Note(this.parent, item.content, item.done);
-  //   }
-  // }
 }
 
 export default Note;
