@@ -1,7 +1,7 @@
 import Note from './Note.js';
 
 class NoteList {
-  _note = [];
+  _noteList = [];
   constructor(parent) {
     this.container = document.createElement('div');
     this.parent = parent;
@@ -10,14 +10,21 @@ class NoteList {
   }
 
   addNote(item) {
-    new Note(this, item);
+    const newNote = new Note(this, item);
+    if (localStorage.getItem('list')) {
+      this._noteList = JSON.parse(localStorage.getItem('list'));
+    }
+    this._noteList.push(newNote._note);
+    localStorage.setItem('list', JSON.stringify(this._noteList));
   }
 
   noteInit() {
-    if (localStorage.getItem('name')) {
-      this._note.push(JSON.parse(localStorage.getItem('name')));
-      const [item] = this._note[0];
-      new Note(this, item.content, item.done);
+    if (localStorage.getItem('list')) {
+      let list = JSON.parse(localStorage.getItem('list'));
+      list.forEach((e) => {
+        const { name, content, done } = e[0];
+        new Note(this, content, done);
+      });
     }
   }
 }

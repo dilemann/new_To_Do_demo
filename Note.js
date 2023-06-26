@@ -1,9 +1,10 @@
 class Note {
-  _done = false;
+  _done;
   _note = [];
   constructor(parent, name = '', done = '') {
     this.parent = parent;
     this.name = name;
+    this._done = done;
     this.item = document.createElement('div');
     this.buttonContainer = document.createElement('div');
     this.doneButton = document.createElement('button');
@@ -37,20 +38,34 @@ class Note {
     this.buttonContainer.append(this.saveButton);
     this.buttonContainer.append(this.doneButton);
     this.buttonContainer.append(this.deleteButton);
-    this._dataSave();
-    this.doneButton.addEventListener('click', () => (this.done = !this.done));
-
-    this.editButton.addEventListener('click', () => {
-      this._feldActivate();
-      console.log();
+    this.doneButton.addEventListener('click', (event) => {
+      this.done = !this.done;
+      this.changeLS(event.target);
     });
-    this.saveButton.addEventListener('click', () => this._dataSave());
+
+    this.editButton.addEventListener('click', () => this._feldActivate());
+    this.saveButton.addEventListener('click', (event) => {
+      this.dataSave();
+    });
+
+    this.input.addEventListener('input', (e) => {
+      this._note = [
+        {
+          name: 'name',
+          content: this.input.value,
+          done: this._done,
+        },
+      ];
+      this.changeLS(e.target);
+    });
+
     this.input.value = this.name;
+    this.dataSave();
   }
 
   set done(item) {
     this._done = item;
-    this._dataSave();
+    this.dataSave();
   }
 
   get done() {
@@ -62,9 +77,7 @@ class Note {
     this.input.disabled = false;
   }
 
-  _dataSave() {
-    if (this.done) this.item.classList.add('note_active');
-    else this.item.classList.remove('note_active');
+  dataSave() {
     this.input.disabled = true;
     this._note = [
       {
@@ -73,7 +86,26 @@ class Note {
         done: this._done,
       },
     ];
-    localStorage.setItem('name', JSON.stringify(this._note));
+    if (this.done) this.item.classList.add('note_active');
+    else this.item.classList.remove('note_active');
+  }
+
+  changeLS(item) {
+    let arr;
+
+    if (localStorage.getItem('list')) {
+      item.setAttribute('name', this._note[0].content);
+      console.log(item.name);
+      arr = JSON.parse(localStorage.getItem('list'));
+      arr.forEach((e) => {
+        if (e[0].content == item.name) {
+          e[0] = this._note[0];
+        }
+      });
+
+      localStorage.setItem('list', JSON.stringify(arr));
+      item.removeAttribute('name');
+    }
   }
 }
 
