@@ -43,20 +43,13 @@ class Note {
       this.changeLS(event.target);
     });
 
-    this.editButton.addEventListener('click', () => this._feldActivate());
-    this.saveButton.addEventListener('click', (event) => {
-      this.dataSave();
+    this.editButton.addEventListener('click', () => {
+      this._feldActivate();
     });
 
-    this.input.addEventListener('input', (e) => {
-      this._note = [
-        {
-          name: 'name',
-          content: this.input.value,
-          done: this._done,
-        },
-      ];
-      this.changeLS(e.target);
+    this.saveButton.addEventListener('click', (event) => {
+      this.dataSave();
+      this.changeLS(event.target);
     });
 
     this.input.value = this.name;
@@ -79,32 +72,21 @@ class Note {
 
   dataSave() {
     this.input.disabled = true;
-    this._note = [
-      {
-        name: 'name',
-        content: this.input.value,
-        done: this._done,
-      },
-    ];
+
     if (this.done) this.item.classList.add('note_active');
     else this.item.classList.remove('note_active');
   }
 
   changeLS(item) {
-    let arr;
-
     if (localStorage.getItem('list')) {
-      item.setAttribute('name', this._note[0].content);
-      console.log(item.name);
-      arr = JSON.parse(localStorage.getItem('list'));
-      arr.forEach((e) => {
-        if (e[0].content == item.name) {
-          e[0] = this._note[0];
+      let l = JSON.parse(localStorage.getItem('list'));
+      l.forEach((element) => {
+        if (element.id == item.id) {
+          element.name = this.input.value;
+          element.done = this._done;
         }
       });
-
-      localStorage.setItem('list', JSON.stringify(arr));
-      item.removeAttribute('name');
+      localStorage.setItem('list', JSON.stringify(l));
     }
   }
 }
