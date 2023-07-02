@@ -38,27 +38,29 @@ class Note {
     this.buttonContainer.append(this.saveButton);
     this.buttonContainer.append(this.doneButton);
     this.buttonContainer.append(this.deleteButton);
-    this.doneButton.addEventListener('click', (event) => {
+    this.deleteButton.addEventListener('click', () => this.delete());
+    this.doneButton.addEventListener('click', () => {
       this.done = !this.done;
-      this.changeLS(event.target);
+      this.modifyLS();
     });
 
     this.editButton.addEventListener('click', () => {
       this._feldActivate();
     });
 
-    this.saveButton.addEventListener('click', (event) => {
-      this.dataSave();
-      this.changeLS(event.target);
+    this.saveButton.addEventListener('click', () => {
+      this.input.disabled = true;
+      this.modifyLS();
     });
 
     this.input.value = this.name;
-    this.dataSave();
+    this.noteStatus();
   }
 
   set done(item) {
     this._done = item;
-    this.dataSave();
+    this.input.disabled = true;
+    this.noteStatus();
   }
 
   get done() {
@@ -70,24 +72,30 @@ class Note {
     this.input.disabled = false;
   }
 
-  dataSave() {
-    this.input.disabled = true;
-
+  noteStatus() {
     if (this.done) this.item.classList.add('note_active');
     else this.item.classList.remove('note_active');
   }
 
-  changeLS(item) {
-    if (localStorage.getItem('list')) {
-      let l = JSON.parse(localStorage.getItem('list'));
-      l.forEach((element) => {
-        if (element.id == item.id) {
-          element.name = this.input.value;
-          element.done = this._done;
-        }
-      });
-      localStorage.setItem('list', JSON.stringify(l));
-    }
+  modifyLS() {
+    let list = JSON.parse(localStorage.getItem('list'));
+    list.forEach((element) => {
+      if (element.id == this.id) {
+        element.name = this.input.value;
+        element.done = this._done;
+      }
+    });
+    localStorage.setItem('list', JSON.stringify(list));
+  }
+
+  delete() {
+    this.parent._noteList.splice(this.id - 1, 1);
+    this.parent._noteList.forEach((element) => (element.id = 0));
+    this.parent._noteList.forEach(
+      (element) => (element.id = this.parent.getNewId())
+    );
+    this.parent.saveLS();
+    this.item.remove();
   }
 }
 
