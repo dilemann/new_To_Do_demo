@@ -2,10 +2,11 @@ import Note from './Note.js';
 
 class NoteList {
   _noteList = [];
-  constructor(parent) {
+  constructor(parent, title) {
     this.container = document.createElement('div');
+    this.title = title;
     this.parent = parent;
-    this.parent.append(this.container);
+    this.parent.list.append(this.container);
     this.noteInit();
   }
 
@@ -36,12 +37,12 @@ class NoteList {
         list.push(obj);
       });
     }
-    localStorage.setItem('list', JSON.stringify(list));
+    localStorage.setItem(this.title, JSON.stringify(list));
   }
 
   noteInit() {
-    if (localStorage.getItem('list')) {
-      this._noteList = JSON.parse(localStorage.getItem('list'));
+    if (localStorage.getItem(this.title)) {
+      this._noteList = JSON.parse(localStorage.getItem(this.title));
       this._noteList.forEach((element) => {
         const { name, done } = element;
         const newNote = new Note(this, name, done);

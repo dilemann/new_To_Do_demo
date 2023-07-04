@@ -55,6 +55,7 @@ class Note {
 
     this.input.value = this.name;
     this.noteStatus();
+    // console.log(this.parent);
   }
 
   set done(item) {
@@ -78,14 +79,16 @@ class Note {
   }
 
   modifyLS() {
-    let list = JSON.parse(localStorage.getItem('list'));
-    list.forEach((element) => {
-      if (element.id == this.id) {
-        element.name = this.input.value;
-        element.done = this._done;
-      }
-    });
-    localStorage.setItem('list', JSON.stringify(list));
+    if (localStorage.getItem(this.parent.title)) {
+      let list = JSON.parse(localStorage.getItem(this.parent.title));
+      list.forEach((element) => {
+        if (element.id == this.id) {
+          element.name = this.input.value;
+          element.done = this._done;
+        }
+      });
+      localStorage.setItem(this.parent.title, JSON.stringify(list));
+    }
   }
 
   delete() {
