@@ -37,11 +37,7 @@ export class ToDo {
     this.container.append(this.form);
     this.container.append(this.list);
     this.parent.append(this.container);
-    if (localStorage.getItem('title')) {
-      const t = JSON.parse(localStorage.getItem('title'));
-      console.log(t);
-      new NoteList(this, t);
-    }
+    this.ToDoInit();
     this.form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (this._notes) {
@@ -54,6 +50,10 @@ export class ToDo {
   addNewUser(title) {
     this.list.innerHTML = '';
     this._notes = new NoteList(this, title);
+    this.addNavList(title);
+  }
+
+  addNavList(title) {
     let btn = document.createElement('button');
     btn.classList.add('user__btn', 'btn');
     this.nav.append(btn);
@@ -61,17 +61,42 @@ export class ToDo {
     btn.addEventListener('click', () => {
       this.currentUser = title;
     });
-    localStorage.setItem('title', JSON.stringify(title));
+    this._users.push({
+      title,
+      btn,
+    });
+    this.btnActive(title);
   }
 
   set currentUser(title) {
     this.list.innerHTML = '';
     this._currentUser = title;
     this._notes = new NoteList(this, title);
-    localStorage.setItem('title', JSON.stringify(title));
+    this.btnActive(title);
   }
 
   get currentUser() {
     return this._currentUser;
+  }
+
+  ToDoInit() {
+    if (localStorage.getItem('actuell') && localStorage.getItem('nav-list')) {
+      const list = JSON.parse(localStorage.getItem('nav-list'));
+      const actuell = JSON.parse(localStorage.getItem('actuell'));
+      list.forEach((e) => this.addNavList(e.title));
+      new NoteList(this, actuell);
+      this.btnActive(actuell);
+    }
+  }
+
+  btnActive(title) {
+    localStorage.setItem('nav-list', JSON.stringify(this._users));
+    this._users.forEach((element) => {
+      element.btn.classList.remove('user__btn_active');
+      if (title == element.btn.textContent) {
+        element.btn.classList.add('user__btn_active');
+      }
+    });
+    localStorage.setItem('actuell', JSON.stringify(title));
   }
 }
