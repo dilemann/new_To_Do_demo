@@ -49,18 +49,17 @@ class Note {
     });
 
     this.saveButton.addEventListener('click', () => {
-      this.input.disabled = true;
+      this._feldDEActivate();
       this.modifyLS();
     });
 
     this.input.value = this.name;
     this.noteStatus();
-    // console.log(this.parent);
   }
 
   set done(item) {
     this._done = item;
-    this.input.disabled = true;
+    this._feldDEActivate();
     this.noteStatus();
   }
 
@@ -71,6 +70,12 @@ class Note {
   _feldActivate() {
     this.done = false;
     this.input.disabled = false;
+    this.item.classList.add('note_border');
+  }
+
+  _feldDEActivate() {
+    this.input.disabled = true;
+    this.item.classList.remove('note_border');
   }
 
   noteStatus() {

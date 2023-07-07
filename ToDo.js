@@ -12,6 +12,7 @@ export class ToDo {
     this.title = document.createElement('h2');
     this.form = document.createElement('form');
     this.input = document.createElement('input');
+    this.input.disabled = true;
     this.buttonWrapper = document.createElement('div');
     this.button = document.createElement('button');
     this.list = document.createElement('div');
@@ -38,6 +39,7 @@ export class ToDo {
     this.container.append(this.list);
     this.parent.append(this.container);
     this.ToDoInit();
+
     this.form.addEventListener('submit', (e) => {
       e.preventDefault();
       if (this._notes) {
@@ -48,9 +50,58 @@ export class ToDo {
   }
 
   addNewUser(title) {
-    this.list.innerHTML = '';
-    this._notes = new NoteList(this, title);
-    this.addNavList(title);
+    if (title) {
+      this.input.disabled = false;
+      let foundDuplicate = false;
+      if (this._users.length !== 0) {
+        this._users.forEach((user) => {
+          if (user.title == title) {
+            foundDuplicate = true;
+          }
+        });
+
+        if (foundDuplicate) {
+          alert('Gleische Name ist verboten');
+          return;
+        } else {
+          this.list.innerHTML = '';
+          this._notes = new NoteList(this, title);
+          this.addNavList(title);
+        }
+      } else {
+        this.list.innerHTML = '';
+        this._notes = new NoteList(this, title);
+        this.addNavList(title);
+      }
+    }
+  }
+
+  removeUser() {
+    if (this._notes) {
+      if (localStorage.getItem(this._notes.title)) {
+        localStorage.removeItem(this._notes.title);
+      }
+      if (this._users.length > 1) {
+        const users = this._users.filter(
+          (num) => num.title !== this._notes.title
+        );
+        this._notes.container.remove();
+        this._users = users;
+        const actuellArr = this._users[this._users.length - 1];
+        localStorage.setItem('nav-list', JSON.stringify(this._users));
+        localStorage.setItem('actuell', JSON.stringify(actuellArr.title));
+        this.nav.innerHTML = '';
+        this._users = [];
+        this.ToDoInit();
+      } else {
+        this._users = [];
+        this.nav.innerHTML = '';
+        this._notes.container.remove();
+        localStorage.removeItem('nav-list');
+        localStorage.removeItem('actuell');
+        this.input.disabled = true;
+      }
+    }
   }
 
   addNavList(title) {
@@ -81,10 +132,12 @@ export class ToDo {
 
   ToDoInit() {
     if (localStorage.getItem('actuell') && localStorage.getItem('nav-list')) {
+      this.input.disabled = false;
+      console.log(1);
       const list = JSON.parse(localStorage.getItem('nav-list'));
       const actuell = JSON.parse(localStorage.getItem('actuell'));
       list.forEach((e) => this.addNavList(e.title));
-      new NoteList(this, actuell);
+      this._notes = new NoteList(this, actuell);
       this.btnActive(actuell);
     }
   }

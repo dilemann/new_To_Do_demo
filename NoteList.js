@@ -4,6 +4,8 @@ class NoteList {
   _noteList = [];
   constructor(parent, title) {
     this.container = document.createElement('div');
+    this.container.classList.add('cc');
+
     this.title = title;
     this.parent = parent;
     this.parent.list.append(this.container);
