@@ -9,7 +9,7 @@ export class ToDo {
     this.container = document.createElement('div');
     this.wrapperNav = document.createElement('div');
     this.nav = document.createElement('nav');
-    this.title = document.createElement('h2');
+    this.header = document.createElement('h2');
     this.form = document.createElement('form');
     this.input = document.createElement('input');
     this.input.disabled = true;
@@ -31,9 +31,10 @@ export class ToDo {
 
     this.buttonWrapper.append(this.button);
     this.form.append(this.input);
+    this.form.reset();
     this.form.append(this.buttonWrapper);
     this.wrapperNav.append(this.nav);
-    this.wrapperNav.append(this.title);
+    this.wrapperNav.append(this.header);
     this.container.append(this.wrapperNav);
     this.container.append(this.form);
     this.container.append(this.list);
@@ -67,17 +68,20 @@ export class ToDo {
           this.list.innerHTML = '';
           this._notes = new NoteList(this, title);
           this.addNavList(title);
+          this.header.textContent = title;
         }
       } else {
         this.list.innerHTML = '';
         this._notes = new NoteList(this, title);
         this.addNavList(title);
+        this.header.textContent = title;
       }
     }
   }
 
   removeUser() {
     if (this._notes) {
+      this.header.textContent = '';
       if (localStorage.getItem(this._notes.title)) {
         localStorage.removeItem(this._notes.title);
       }
@@ -100,6 +104,7 @@ export class ToDo {
         localStorage.removeItem('nav-list');
         localStorage.removeItem('actuell');
         this.input.disabled = true;
+        this.form.reset();
       }
     }
   }
@@ -123,6 +128,7 @@ export class ToDo {
     this.list.innerHTML = '';
     this._currentUser = title;
     this._notes = new NoteList(this, title);
+    this.header.textContent = title;
     this.btnActive(title);
   }
 
@@ -133,12 +139,12 @@ export class ToDo {
   ToDoInit() {
     if (localStorage.getItem('actuell') && localStorage.getItem('nav-list')) {
       this.input.disabled = false;
-      console.log(1);
       const list = JSON.parse(localStorage.getItem('nav-list'));
       const actuell = JSON.parse(localStorage.getItem('actuell'));
       list.forEach((e) => this.addNavList(e.title));
       this._notes = new NoteList(this, actuell);
       this.btnActive(actuell);
+      this.header.textContent = actuell;
     }
   }
 
