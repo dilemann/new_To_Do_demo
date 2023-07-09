@@ -10,6 +10,7 @@ class NoteList {
     this.parent = parent;
     this.parent.list.append(this.container);
     this.noteInit();
+    this.checkEmpty();
   }
 
   getNewId() {
@@ -40,6 +41,8 @@ class NoteList {
       });
     }
     localStorage.setItem(this.title, JSON.stringify(list));
+
+    this.checkEmpty();
   }
 
   noteInit() {
@@ -51,6 +54,15 @@ class NoteList {
         newNote.id = element.id;
       });
     }
+  }
+
+  checkEmpty() {
+    if (this._noteList.length === 0) {
+      this.empty = document.createElement('div');
+      this.empty.classList.add('empty__list', 'box');
+      this.container.append(this.empty);
+      this.empty.innerHTML = 'Liste ist leer';
+    } else if (this.empty) this.empty.remove();
   }
 }
 

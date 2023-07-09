@@ -207,3 +207,9 @@ body {
     background-color: rgb(30, 136, 178);
     color: bisque;
 }
+
+.empty__list {
+    height: 50vh;
+    align-items: flex-start;
+    padding: 10px;
+}
