@@ -20,7 +20,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 40px;
-    width: 80px;
+    width: 100px;
     color: white;
     transition: background-color 1s;
     cursor: pointer;
@@ -134,7 +134,7 @@ body {
 
 
 .action__btn {
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
     border-radius: 3px;
     background-color: goldenrod;
 }
@@ -143,6 +143,9 @@ body {
     background-color: rgb(168, 137, 61);
 }
 
+.remove__btn {
+    border-radius: 3px;
+}
 
 
 .form {
