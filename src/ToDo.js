@@ -1,10 +1,10 @@
 import NoteList from './NoteList.js';
 
-export class ToDo {
-  _currentUser = [];
-  _users = [];
-  _notes = null;
+class ToDo {
   constructor(parent) {
+    this._currentUser = [];
+    this._users = [];
+    this._notes = null;
     this.parent = parent;
     this.container = document.createElement('div');
     this.wrapperNav = document.createElement('div');
@@ -56,14 +56,13 @@ export class ToDo {
       let foundDuplicate = false;
       if (this._users.length !== 0) {
         this._users.forEach((user) => {
-          if (user.title == title) {
+          if (user.title === title) {
             foundDuplicate = true;
           }
         });
 
         if (foundDuplicate) {
-          alert('Gleische Name ist verboten');
-          return;
+          alert('Gleiche Name ist verboten');
         } else {
           this.list.innerHTML = '';
           this._notes = new NoteList(this, title);
@@ -110,7 +109,7 @@ export class ToDo {
   }
 
   addNavList(title) {
-    let btn = document.createElement('button');
+    const btn = document.createElement('button');
     btn.classList.add('user__btn', 'btn');
     this.nav.append(btn);
     btn.textContent = title;
@@ -152,10 +151,12 @@ export class ToDo {
     localStorage.setItem('nav-list', JSON.stringify(this._users));
     this._users.forEach((element) => {
       element.btn.classList.remove('user__btn_active');
-      if (title == element.btn.textContent) {
+      if (title === element.btn.textContent) {
         element.btn.classList.add('user__btn_active');
       }
     });
     localStorage.setItem('actuell', JSON.stringify(title));
   }
 }
+
+export default ToDo;

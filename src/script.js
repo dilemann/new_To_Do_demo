@@ -1,6 +1,6 @@
-import Note from './Note.js';
-import NoteList from './NoteList.js';
-import { ToDo } from './ToDo.js';
+// import Note from './Note.js';
+// import NoteList from './NoteList.js';
+import ToDo from './ToDo.js';
 
 const parent = document.querySelector('.app');
 const action = document.querySelector('.action__btn');

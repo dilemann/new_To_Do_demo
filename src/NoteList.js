@@ -1,8 +1,8 @@
 import Note from './Note.js';
 
 class NoteList {
-  _noteList = [];
   constructor(parent, title) {
+    this._noteList = [];
     this.container = document.createElement('div');
     this.container.classList.add('cc');
 
@@ -15,9 +15,9 @@ class NoteList {
 
   getNewId() {
     let max = 0;
-    for (const note of this._noteList) {
+    this._noteList.forEach((note) => {
       if (note.id > max) max = note.id;
-    }
+    });
     return max + 1;
   }
 
@@ -29,10 +29,10 @@ class NoteList {
   }
 
   saveLS() {
-    let list = [];
+    const list = [];
     if (this._noteList.length > 0) {
       this._noteList.forEach((element) => {
-        let obj = {
+        const obj = {
           id: element.id,
           name: element.name,
           done: element.done,

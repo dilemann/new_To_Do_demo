@@ -203,6 +203,7 @@ body {
 
     display: flex;
     flex-direction: row;
+    margin-top: 20px;
 }
 
 .user__btn_active {

@@ -1,7 +1,7 @@
 class Note {
-  _done;
-  _note = [];
   constructor(parent, name = '', done = '') {
+    this._done = done;
+    this._note = [];
     this.parent = parent;
     this.name = name;
     this._done = done;
@@ -85,9 +85,9 @@ class Note {
 
   modifyLS() {
     if (localStorage.getItem(this.parent.title)) {
-      let list = JSON.parse(localStorage.getItem(this.parent.title));
+      const list = JSON.parse(localStorage.getItem(this.parent.title));
       list.forEach((element) => {
-        if (element.id == this.id) {
+        if (element.id === this.id) {
           element.name = this.input.value;
           element.done = this._done;
         }
