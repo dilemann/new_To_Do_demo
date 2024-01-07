@@ -1,0 +1,12 @@
+{
+  "extends": ["eslint-config-airbnb"],
+  "rules": {
+    "no-undef": "off",
+    "linebreak-style": "off",
+    "no-underscore-dangle": "off",
+    "no-param-reassign": "off",
+    "no-return-assign": "off",
+    "comma-dangle": "off",
+    "import/extensions": "off"
+  }
+}
