@@ -24,10 +24,10 @@ class Note {
     this.deleteButton.classList.add('note__remove__btn', 'btn');
     this.writeField.classList.add('note__write');
 
-    this.doneButton.textContent = 'Erledigt';
+    this.doneButton.textContent = 'Resolve';
     this.editButton.textContent = 'Edit';
     this.saveButton.textContent = 'Save';
-    this.deleteButton.textContent = 'Löschen';
+    this.deleteButton.textContent = 'Remove';
 
     // add to parent
     this.parent.container.append(this.item);
