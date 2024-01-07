@@ -23,10 +23,10 @@ class ToDo {
     this.nav.classList.add('nav');
     this.form.classList.add('form');
     this.input.classList.add('form__input');
-    this.input.placeholder = 'Geben Sie den Namen des neuen Falls ein';
+    this.input.placeholder = 'Enter the title of the new task';
     this.buttonWrapper.classList.add('form__btn-container');
     this.button.classList.add('form__btn');
-    this.button.textContent = 'den Fall hinzufügen';
+    this.button.textContent = 'Add a task';
     // this.button.disabled = false;
 
     this.buttonWrapper.append(this.button);
@@ -50,31 +50,35 @@ class ToDo {
     });
   }
 
-  addNewUser(title) {
-    if (title) {
-      this.input.disabled = false;
-      let foundDuplicate = false;
-      if (this._users.length !== 0) {
-        this._users.forEach((user) => {
-          if (user.title === title) {
-            foundDuplicate = true;
-          }
-        });
+  /**
+   * ein neuer Benutzer wird mit dem übergebenem Titel erstellt
+   * @param {string} title
+   */
 
-        if (foundDuplicate) {
-          alert('Gleiche Name ist verboten');
-        } else {
-          this.list.innerHTML = '';
-          this._notes = new NoteList(this, title);
-          this.addNavList(title);
-          this.header.textContent = title;
+  addNewUser(title) {
+    if (!title) return;
+    this.input.disabled = false;
+    let foundDuplicate = false;
+    if (this._users.length !== 0) {
+      this._users.forEach((user) => {
+        if (user.title === title) {
+          foundDuplicate = true;
         }
+      });
+
+      if (foundDuplicate) {
+        alert('Gleiche Name ist verboten');
       } else {
         this.list.innerHTML = '';
         this._notes = new NoteList(this, title);
         this.addNavList(title);
         this.header.textContent = title;
       }
+    } else {
+      this.list.innerHTML = '';
+      this._notes = new NoteList(this, title);
+      this.addNavList(title);
+      this.header.textContent = title;
     }
   }
 
