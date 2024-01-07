@@ -1,0 +1,13 @@
+#dockercomposer version
+version: '3'
+
+services:
+  todo-list:
+    image: nginx
+    container_name: todo-list
+    ports:
+      - 8080:80
+    working_dir: /usr/share/nginx/html
+
+    volumes:
+      - ./src:/usr/share/nginx/html
