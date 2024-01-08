@@ -15,23 +15,11 @@ class ToDo {
 
     this.container.classList.add('container');
     this.nav.classList.add('nav');
-    this.form.classList.add('form');
-    this.input.classList.add('form__input');
-    this.input.placeholder = 'Enter the title of the new task';
-    this.buttonWrapper.classList.add('form__btn-container');
-    this.button.classList.add('form__btn');
-    this.button.textContent = 'Add a task';
     // this.button.disabled = false;
 
-    this.buttonWrapper.append(this.button);
-    this.form.append(this.input);
-    this.form.reset();
-    this.form.append(this.buttonWrapper);
     this.wrapperNav.append(this.nav);
     this.wrapperNav.append(this.header);
     this.container.append(this.wrapperNav);
-    this.container.append(this.form);
-    this.container.append(this.list);
     this.parent.append(this.container);
     this.ToDoInit();
 
