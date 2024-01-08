@@ -32,14 +32,14 @@ class ToDo {
 
   addNewUser(title) {
     if (!title) return;
-    const foundDuplicate = this._users.some((user) => user.name === title);
+    const foundDuplicate = this._users.filter((user) => user.name === title);
     if (foundDuplicate) {
       alert('Gleicher Name ist verboten');
-    } else {
-      this._notes = new User(this.container, title);
-      this.addNavList(title);
-      this.header.textContent = title;
+      return;
     }
+    this._notes = new User(this.container, title);
+    this.addNavList(title);
+    this.header.textContent = title;
   }
 
   removeUser() {
