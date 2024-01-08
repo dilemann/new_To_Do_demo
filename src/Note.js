@@ -1,7 +1,5 @@
 class Note {
   constructor(parent, name = '', done = '') {
-    this._done = done;
-    this._note = [];
     this.parent = parent;
     this.name = name;
     this._done = done;
@@ -30,7 +28,7 @@ class Note {
     this.deleteButton.textContent = 'Remove';
 
     // add to parent
-    this.parent.container.append(this.item);
+    this.parent.listContainer.append(this.item);
     this.item.append(this.input);
     this.item.append(this.writeField);
     this.item.append(this.buttonContainer);
@@ -84,16 +82,15 @@ class Note {
   }
 
   modifyLS() {
-    if (localStorage.getItem(this.parent.title)) {
-      const list = JSON.parse(localStorage.getItem(this.parent.title));
-      list.forEach((element) => {
-        if (element.id === this.id) {
-          element.name = this.input.value;
-          element.done = this._done;
-        }
-      });
-      localStorage.setItem(this.parent.title, JSON.stringify(list));
-    }
+    if (!localStorage.getItem(this.parent.title)) return;
+    const list = JSON.parse(localStorage.getItem(this.parent.title));
+    list.forEach((element) => {
+      if (element.id === this.id) {
+        element.name = this.input.value;
+        element.done = this._done;
+      }
+    });
+    localStorage.setItem(this.parent.title, JSON.stringify(list));
   }
 
   delete() {
