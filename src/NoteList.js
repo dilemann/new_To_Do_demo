@@ -7,12 +7,11 @@ class NoteList {
     this.listContainer.classList.add('cc');
     this.form = document.createElement('form');
     this.input = document.createElement('input');
-    this.input.disabled = true;
+    // this.input.disabled = true;
     this.buttonWrapper = document.createElement('div');
     this.button = document.createElement('button');
     this.title = title;
     this.parent = parent;
-    console.log(this.parent);
 
     this.form.classList.add('form');
     this.input.classList.add('form__input');
@@ -27,6 +26,11 @@ class NoteList {
     this.form.append(this.buttonWrapper);
     this.parent.append(this.form);
     this.parent.append(this.listContainer);
+    this.form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.addNote(this.input.value);
+      this.form.reset();
+    });
     this.noteInit();
     this.checkEmpty();
   }
@@ -39,6 +43,10 @@ class NoteList {
     return max + 1;
   }
 
+  /**
+   * Text zu einer Notiz hinzufügen
+   * @param {string} item
+   */
   addNote(item) {
     const newNote = new Note(this, item);
     newNote.id = this.getNewId();
@@ -46,6 +54,10 @@ class NoteList {
     this.saveLS();
   }
 
+  /**
+   * Speichern von Notizdaten auf localStorage
+   * @param {}
+   */
   saveLS() {
     const list = [];
     if (this._noteList.length > 0) {
