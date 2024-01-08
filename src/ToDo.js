@@ -88,9 +88,8 @@ class ToDo {
   }
 
   set currentUser(title) {
-    this.list.innerHTML = '';
     this._currentUser = title;
-    this._notes = new NoteList(this, title);
+    this._notes = new User(this.container, title);
     this.header.textContent = title;
     this.btnActive(title);
   }
