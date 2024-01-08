@@ -3,12 +3,29 @@ import Note from './Note.js';
 class NoteList {
   constructor(parent, title) {
     this._noteList = [];
-    this.container = document.createElement('div');
-    this.container.classList.add('cc');
-
+    this.listContainer = document.createElement('div');
+    this.listContainer.classList.add('cc');
+    this.form = document.createElement('form');
+    this.input = document.createElement('input');
+    this.input.disabled = true;
+    this.buttonWrapper = document.createElement('div');
+    this.button = document.createElement('button');
     this.title = title;
     this.parent = parent;
-    this.parent.list.append(this.container);
+
+    this.form.classList.add('form');
+    this.input.classList.add('form__input');
+    this.input.placeholder = 'Enter the title of the new task';
+    this.buttonWrapper.classList.add('form__btn-container');
+    this.button.classList.add('form__btn');
+    this.button.textContent = 'Add a task';
+
+    this.buttonWrapper.append(this.button);
+    this.form.append(this.input);
+    this.form.reset();
+    this.form.append(this.buttonWrapper);
+    this.parent.append(this.form);
+    this.parent.append(this.listContainer);
     this.noteInit();
     this.checkEmpty();
   }
@@ -60,7 +77,7 @@ class NoteList {
     if (this._noteList.length === 0) {
       this.empty = document.createElement('div');
       this.empty.classList.add('empty__list', 'box');
-      this.container.append(this.empty);
+      this.listContainer.append(this.empty);
       this.empty.innerHTML = 'Liste ist leer';
     } else if (this.empty) this.empty.remove();
   }

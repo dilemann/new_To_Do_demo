@@ -10,12 +10,6 @@ class ToDo {
     this.wrapperNav = document.createElement('div');
     this.nav = document.createElement('nav');
     this.header = document.createElement('h2');
-    this.form = document.createElement('form');
-    this.input = document.createElement('input');
-    this.input.disabled = true;
-    this.buttonWrapper = document.createElement('div');
-    this.button = document.createElement('button');
-    this.list = document.createElement('div');
 
     this.actionBtn = document.querySelector('#add');
 
