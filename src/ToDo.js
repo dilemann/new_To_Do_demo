@@ -45,12 +45,12 @@ class ToDo {
   removeUser() {
     if (!this.user) return;
     this.header.textContent = '';
-    if (localStorage.getItem(this.user.name)) {
-      localStorage.removeItem(this.user.name);
+    if (localStorage.getItem(this.user.title)) {
+      localStorage.removeItem(this.user.title);
     }
     if (this.userList.length > 1) {
       const newUserList = this.userList.filter(
-        (num) => num.title !== this.user.name
+        (num) => num.title !== this.user.title
       );
       this.user.container.remove();
       this.userList = newUserList;
