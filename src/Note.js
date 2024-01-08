@@ -1,7 +1,5 @@
 class Note {
   constructor(parent, name = '', done = '') {
-    this._done = done;
-    this._note = [];
     this.parent = parent;
     this.name = name;
     this._done = done;
