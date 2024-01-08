@@ -32,26 +32,11 @@ class ToDo {
 
   addNewUser(title) {
     if (!title) return;
-    this.input.disabled = false;
-    let foundDuplicate = false;
-    if (this._users.length !== 0) {
-      this._users.forEach((user) => {
-        if (user.title === title) {
-          foundDuplicate = true;
-        }
-      });
-
-      if (foundDuplicate) {
-        alert('Gleiche Name ist verboten');
-      } else {
-        this.list.innerHTML = '';
-        this._notes = new NoteList(this, title);
-        this.addNavList(title);
-        this.header.textContent = title;
-      }
+    const foundDuplicate = this._users.some((user) => user.name === title);
+    if (foundDuplicate) {
+      alert('Gleicher Name ist verboten');
     } else {
-      this.list.innerHTML = '';
-      this._notes = new NoteList(this, title);
+      this._notes = new User(this.container, title);
       this.addNavList(title);
       this.header.textContent = title;
     }

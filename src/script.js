@@ -1,7 +1,5 @@
-// import Note from './Note.js';
-// import NoteList from './NoteList.js';
 import ToDo from './ToDo.js';
-import User from './User.js';
+// import User from './User.js';
 
 const parent = document.querySelector('.app');
 const action = document.querySelector('.action__btn');
