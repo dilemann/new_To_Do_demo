@@ -12,6 +12,7 @@ class NoteList {
     this.button = document.createElement('button');
     this.title = title;
     this.parent = parent;
+    console.log(this.parent);
 
     this.form.classList.add('form');
     this.input.classList.add('form__input');
