@@ -3,8 +3,8 @@ import User from './User.js';
 class ToDo {
   constructor(parent) {
     this._currentUser = [];
-    this._users = [];
-    this._notes = null;
+    this.userList = [];
+    this.user = null;
     this.parent = parent;
     this.container = document.createElement('div');
     this.wrapperNav = document.createElement('div');
@@ -31,43 +31,39 @@ class ToDo {
 
   addNewUser(title) {
     if (!title) return;
-    const foundDuplicate = this._users.some((user) => user.title === title);
+    const foundDuplicate = this.userList.some((user) => user.title === title);
     if (foundDuplicate) {
       alert('Gleicher Name ist verboten');
       return;
     }
-    if (this._users.length !== 0) this.container.lastChild.remove();
-    this._notes = new User(this.container, title);
+    if (this.userList.length !== 0) this.container.lastChild.remove();
+    this.user = new User(this.container, title);
     this.addNavList(title);
     this.header.textContent = title;
   }
 
   removeUser() {
-    if (this._notes) {
-      console.log(this._notes);
-      this.header.textContent = '';
-      if (localStorage.getItem(this._notes.name)) {
-        localStorage.removeItem(this._notes.name);
-      }
-      if (this._users.length > 1) {
-        const users = this._users.filter(
-          (num) => num.title !== this._notes.name
-        );
-        this._notes.container.remove();
-        this._users = users;
-        const actuellArr = this._users[this._users.length - 1];
-        localStorage.setItem('nav-list', JSON.stringify(this._users));
-        localStorage.setItem('actuell', JSON.stringify(actuellArr.title));
-        this.nav.innerHTML = '';
-        this._users = [];
-        this.ToDoInit();
-      } else {
-        this._users = [];
-        this.nav.innerHTML = '';
-        this._notes.container.remove();
-        localStorage.removeItem('nav-list');
-        localStorage.removeItem('actuell');
-      }
+    if (!this.user) return;
+    this.header.textContent = '';
+    if (localStorage.getItem(this.user.name)) {
+      localStorage.removeItem(this.user.name);
+    }
+    if (this.userList.length > 1) {
+      const users = this.userList.filter((num) => num.title !== this.user.name);
+      this.user.container.remove();
+      this.userList = users;
+      const actuellArr = this.userList[this.userList.length - 1];
+      localStorage.setItem('nav-list', JSON.stringify(this.userList));
+      localStorage.setItem('actuell', JSON.stringify(actuellArr.title));
+      this.nav.innerHTML = '';
+      this.userList = [];
+      this.ToDoInit();
+    } else {
+      this.userList = [];
+      this.nav.innerHTML = '';
+      this.user.container.remove();
+      localStorage.removeItem('nav-list');
+      localStorage.removeItem('actuell');
     }
   }
 
@@ -79,7 +75,7 @@ class ToDo {
     btn.addEventListener('click', () => {
       this.currentUser = title;
     });
-    this._users.push({
+    this.userList.push({
       title,
       btn,
     });
@@ -89,7 +85,7 @@ class ToDo {
   set currentUser(title) {
     this._currentUser = title;
     this.container.lastChild.remove();
-    this._notes = new User(this.container, title);
+    this.user = new User(this.container, title);
     this.header.textContent = title;
     this.btnActive(title);
   }
@@ -103,15 +99,15 @@ class ToDo {
       const list = JSON.parse(localStorage.getItem('nav-list'));
       const actuell = JSON.parse(localStorage.getItem('actuell'));
       list.forEach((e) => this.addNavList(e.title));
-      this._notes = new User(this.container, actuell);
+      this.user = new User(this.container, actuell);
       this.btnActive(actuell);
       this.header.textContent = actuell;
     }
   }
 
   btnActive(title) {
-    localStorage.setItem('nav-list', JSON.stringify(this._users));
-    this._users.forEach((element) => {
+    localStorage.setItem('nav-list', JSON.stringify(this.userList));
+    this.userList.forEach((element) => {
       element.btn.classList.remove('user__btn_active');
       if (title === element.btn.textContent) {
         element.btn.classList.add('user__btn_active');
