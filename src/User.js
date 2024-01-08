@@ -1,4 +1,4 @@
-import NoteList from './NoteList';
+import NoteList from './NoteList.js';
 
 class User {
   constructor(name) {
