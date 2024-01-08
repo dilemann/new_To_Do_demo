@@ -23,14 +23,6 @@ class ToDo {
     this.container.append(this.wrapperNav);
     this.parent.append(this.container);
     this.ToDoInit();
-
-    // this.form.addEventListener('submit', (e) => {
-    //   e.preventDefault();
-    //   if (this._notes) {
-    //     this._notes.addNote(this.input.value);
-    //     this.form.reset();
-    //   }
-    // });
   }
 
   /**
@@ -127,7 +119,6 @@ class ToDo {
       const list = JSON.parse(localStorage.getItem('nav-list'));
       const actuell = JSON.parse(localStorage.getItem('actuell'));
       list.forEach((e) => this.addNavList(e.title));
-      // this._notes = new NoteList(this, actuell);
       this._notes = new User(this.container, actuell);
       this.btnActive(actuell);
       this.header.textContent = actuell;
