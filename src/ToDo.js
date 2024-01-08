@@ -49,12 +49,14 @@ class ToDo {
       localStorage.removeItem(this.user.name);
     }
     if (this.userList.length > 1) {
-      const users = this.userList.filter((num) => num.title !== this.user.name);
+      const newUserList = this.userList.filter(
+        (num) => num.title !== this.user.name
+      );
       this.user.container.remove();
-      this.userList = users;
-      const actuellArr = this.userList[this.userList.length - 1];
+      this.userList = newUserList;
+      const currentUser = this.userList[this.userList.length - 1];
       localStorage.setItem('nav-list', JSON.stringify(this.userList));
-      localStorage.setItem('actuell', JSON.stringify(actuellArr.title));
+      localStorage.setItem('currentUser', JSON.stringify(currentUser.title));
       this.nav.innerHTML = '';
       this.userList = [];
       this.ToDoInit();
@@ -63,7 +65,7 @@ class ToDo {
       this.nav.innerHTML = '';
       this.user.container.remove();
       localStorage.removeItem('nav-list');
-      localStorage.removeItem('actuell');
+      localStorage.removeItem('currentUser');
     }
   }
 
@@ -95,13 +97,16 @@ class ToDo {
   }
 
   ToDoInit() {
-    if (localStorage.getItem('actuell') && localStorage.getItem('nav-list')) {
+    if (
+      localStorage.getItem('currentUser') &&
+      localStorage.getItem('nav-list')
+    ) {
       const list = JSON.parse(localStorage.getItem('nav-list'));
-      const actuell = JSON.parse(localStorage.getItem('actuell'));
-      list.forEach((e) => this.addNavList(e.title));
-      this.user = new User(this.container, actuell);
-      this.btnActive(actuell);
-      this.header.textContent = actuell;
+      const currentUserName = JSON.parse(localStorage.getItem('currentUser'));
+      list.forEach((element) => this.addNavList(element.title));
+      this.user = new User(this.container, currentUserName);
+      this.btnActive(currentUserName);
+      this.header.textContent = currentUserName;
     }
   }
 
@@ -113,7 +118,7 @@ class ToDo {
         element.btn.classList.add('user__btn_active');
       }
     });
-    localStorage.setItem('actuell', JSON.stringify(title));
+    localStorage.setItem('currentUser', JSON.stringify(title));
   }
 }
 
