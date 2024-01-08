@@ -1,4 +1,3 @@
-import NoteList from './NoteList.js';
 import User from './User.js';
 
 class ToDo {
@@ -32,11 +31,12 @@ class ToDo {
 
   addNewUser(title) {
     if (!title) return;
-    const foundDuplicate = this._users.filter((user) => user.name === title);
+    const foundDuplicate = this._users.some((user) => user.title === title);
     if (foundDuplicate) {
       alert('Gleicher Name ist verboten');
       return;
     }
+    if (this._users.length !== 0) this.container.lastChild.remove();
     this._notes = new User(this.container, title);
     this.addNavList(title);
     this.header.textContent = title;
@@ -44,13 +44,14 @@ class ToDo {
 
   removeUser() {
     if (this._notes) {
+      console.log(this._notes);
       this.header.textContent = '';
-      if (localStorage.getItem(this._notes.title)) {
-        localStorage.removeItem(this._notes.title);
+      if (localStorage.getItem(this._notes.name)) {
+        localStorage.removeItem(this._notes.name);
       }
       if (this._users.length > 1) {
         const users = this._users.filter(
-          (num) => num.title !== this._notes.title
+          (num) => num.title !== this._notes.name
         );
         this._notes.container.remove();
         this._users = users;
@@ -66,8 +67,6 @@ class ToDo {
         this._notes.container.remove();
         localStorage.removeItem('nav-list');
         localStorage.removeItem('actuell');
-        this.input.disabled = true;
-        this.form.reset();
       }
     }
   }
@@ -89,6 +88,7 @@ class ToDo {
 
   set currentUser(title) {
     this._currentUser = title;
+    this.container.lastChild.remove();
     this._notes = new User(this.container, title);
     this.header.textContent = title;
     this.btnActive(title);
