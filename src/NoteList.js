@@ -7,7 +7,6 @@ class NoteList {
     this.listContainer.classList.add('cc');
     this.form = document.createElement('form');
     this.input = document.createElement('input');
-    // this.input.disabled = true;
     this.buttonWrapper = document.createElement('div');
     this.button = document.createElement('button');
     this.title = title;
@@ -59,31 +58,29 @@ class NoteList {
    * @param {}
    */
   saveLS() {
+    if (!this._noteList.length) return;
     const list = [];
-    if (this._noteList.length > 0) {
-      this._noteList.forEach((element) => {
-        const obj = {
-          id: element.id,
-          name: element.name,
-          done: element.done,
-        };
-        list.push(obj);
-      });
-    }
+    this._noteList.forEach((element) => {
+      const obj = {
+        id: element.id,
+        name: element.name,
+        done: element.done,
+      };
+      list.push(obj);
+    });
     localStorage.setItem(this.title, JSON.stringify(list));
 
     this.checkEmpty();
   }
 
   noteInit() {
-    if (localStorage.getItem(this.title)) {
-      this._noteList = JSON.parse(localStorage.getItem(this.title));
-      this._noteList.forEach((element) => {
-        const { name, done } = element;
-        const newNote = new Note(this, name, done);
-        newNote.id = element.id;
-      });
-    }
+    if (!localStorage.getItem(this.title)) return;
+    this._noteList = JSON.parse(localStorage.getItem(this.title));
+    this._noteList.forEach((element) => {
+      const { name, done } = element;
+      const newNote = new Note(this, name, done);
+      newNote.id = element.id;
+    });
   }
 
   checkEmpty() {
@@ -91,7 +88,7 @@ class NoteList {
       this.empty = document.createElement('div');
       this.empty.classList.add('empty__list', 'box');
       this.listContainer.append(this.empty);
-      this.empty.innerHTML = 'Liste ist leer';
+      this.empty.innerHTML = 'Empty page';
     } else if (this.empty) this.empty.remove();
   }
 }

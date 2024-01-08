@@ -33,7 +33,7 @@ class ToDo {
     if (!title) return;
     const foundDuplicate = this.userList.some((user) => user.title === title);
     if (foundDuplicate) {
-      alert('Gleicher Name ist verboten');
+      alert('Same name is forbidden!');
       return;
     }
     if (this.userList.length !== 0) this.container.lastChild.remove();

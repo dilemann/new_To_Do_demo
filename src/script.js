@@ -10,7 +10,7 @@ const newToDo = new ToDo(parent);
 // const newNotelist = new NoteList(parent);
 
 action.addEventListener('click', () => {
-  newToDo.addNewUser(prompt('geben User Name ein'));
+  newToDo.addNewUser(prompt('enter User Name:'));
 });
 
 removeBtn.addEventListener('click', () => {

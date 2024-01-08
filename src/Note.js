@@ -82,16 +82,15 @@ class Note {
   }
 
   modifyLS() {
-    if (localStorage.getItem(this.parent.title)) {
-      const list = JSON.parse(localStorage.getItem(this.parent.title));
-      list.forEach((element) => {
-        if (element.id === this.id) {
-          element.name = this.input.value;
-          element.done = this._done;
-        }
-      });
-      localStorage.setItem(this.parent.title, JSON.stringify(list));
-    }
+    if (!localStorage.getItem(this.parent.title)) return;
+    const list = JSON.parse(localStorage.getItem(this.parent.title));
+    list.forEach((element) => {
+      if (element.id === this.id) {
+        element.name = this.input.value;
+        element.done = this._done;
+      }
+    });
+    localStorage.setItem(this.parent.title, JSON.stringify(list));
   }
 
   delete() {
