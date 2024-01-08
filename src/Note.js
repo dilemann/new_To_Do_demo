@@ -28,7 +28,7 @@ class Note {
     this.deleteButton.textContent = 'Remove';
 
     // add to parent
-    this.parent.container.append(this.item);
+    this.parent.listContainer.append(this.item);
     this.item.append(this.input);
     this.item.append(this.writeField);
     this.item.append(this.buttonContainer);
